@@ -220,7 +220,8 @@ writing small#:larger#, and would give you all of the numbers in
 between.
 
 ```{r}
-
+1:10
+10:1
 ```
 
 `rep()` allows you to repeat something a set number of times. Looking at
@@ -228,12 +229,12 @@ the help file, we can see the arguments contained in the function. To
 use it, we write `rep(thingToBeRepeated, #ofTimes)`.
 
 ```{r}
-
+rep('coffee', 13)
+rep(3, x = 'coffee')
 ```
 
 **Note:** For functions, you can either write arguments in the order
-listed in the help file (not labelled), or make sure you include the
-argument label.
+listed in the help file (not labelled), or make sure you include the argument label.
 
 ```{r}
 
@@ -243,7 +244,7 @@ argument label.
 `seq(lowest#, highest#, by=#)`.
 
 ```{r}
-
+seq(1,10,2)
 ```
 
 #### Learning Outcome 2 Practice:
@@ -252,6 +253,13 @@ argument label.
 2.  Use code to write I love statistics 4 times.
 3.  Repeat the numbers 1-10 twice
 4.  Print every 3rd number from 1-20 3 times.
+```{r}
+seq(1, 100, 5)
+rep("I love statistics", 4)
+rep(1:10, 2)
+rep(seq(1,20,3), 3)
+```
+
 
 ###Learning Outcome 3: Explain the differences between variables,
 vectors, and dataframes
