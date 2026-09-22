@@ -264,9 +264,7 @@ rep(seq(1,20,3), 3)
 ###Learning Outcome 3: Explain the differences between variables,
 vectors, and dataframes
 
-What's the problem with using R as a big, fancy calculator? We haven't
-stored anything so we could use it later. Different things that we will
-need later have different names, but we store them in the same way
+What's the problem with using R as a big, fancy calculator? We haven't stored anything so we could use it later. Different things that we will need later have different names, but we store them in the same way
 
 nameItsBeingSavedAs \<- thingBeingSaved "works all the time"
 variableName = thing "works some of the time"
@@ -300,7 +298,7 @@ Variables store one thing in R (it can be a number, a word, or whatever
 you want)
 
 ```{r}
-
+arsenNumber <- 8
 ```
 
 \*Aside: `c()` means combine. you can put stuff in parentheses and use a
@@ -315,23 +313,23 @@ function- `c()`.
 
 ```{r}
 "numeric"
-
+earlyToClass <- c(1, 60, -5, 5, 15, 10, 1)
 "character"
-
+breakfast<-c('bacon', 'eggs','waffles')
 ```
 
 If you want to call one of the things you saved in a vector, you can
 write `vectorName[position of thing]`
 
 ```{r}
-
+breakfast[3]
 ```
 
 **Dataframes** Data frames are made from multiple vectors. There are
 preloaded datasets in R we can use to practice, such as mtcars:
 
 ```{r}
-
+data(mtcars)
 ```
 
 ### Practice:
@@ -340,12 +338,19 @@ preloaded datasets in R we can use to practice, such as mtcars:
 
 2)Make a vector of the number of cookies you think each animal could eat
 
+```{r}
+animals<-c('zebra','camel','snake','moose','cat','fish')
+cookiePrediction<-c(12,20,1,100,2,0)
+```
+
+
 We can also combine vectors into a dataframe using R functions
 (`cbind.data.frame()` or `rbind.data.frame()`). We'll use the vectors we
 made above as an example.
 
 ```{r}
-
+cookieDat<-cbind.data.frame(animals, cookiePrediction)
+cookieDat
 ```
 
 Just like you can pick one thing in a vector, you can select one column
@@ -355,11 +360,15 @@ a column, you can write `dataframe[,column#]` and you can use
 `dataframe[row#,]`.
 
 ```{r}
+cookieDat$animals
+cookieDat[,1]
+cookieDat[1,]
 ```
 
 You can also get columns by using a `$`.
 
 ```{r}
+cookieDat$animals[1]
 ```
 
 #### Learning Outcome 3 Practice:
@@ -377,6 +386,19 @@ You can also get columns by using a `$`.
 
 Bonus: Print the information in the 3rd row, 1st column.
 
+```{r}
+favIceCream <-('Cookie Dough')
+TVshows <- c('Seinfeld', 'Friends', 'Game of Thrones', 'Downton Abbey')
+ratings <-c(5,7,8,6)
+showDat<-cbind.data.frame(TVshows, ratings)
+showDat[2,]
+showDat$TVshows
+showDat[,2]
+showDat$ratings
+showDat[3,1]
+```
+
+
 ###Learning Outcome 4: Explain how to obtain a subset of your data
 
 Sometimes, you don't need a full dataframe, you just want to use a piece
@@ -391,7 +413,7 @@ For instance, we could use indexing to get only cars in the mtcars
 dataset with 4 gears.
 
 ```{r}
-
+mtcars[mtcars$gear==4,]
 ```
 
 In this case, you'll notice that I put a comma after the logical
@@ -406,7 +428,12 @@ If we wanted to get the same subset of data as above, we could do the
 following:`subset(dataframe, condition)`
 
 ```{r}
+mtcars[mtcars$cyl==6,]
+subset(mtcars, mtcars$cyl==6)
 
+install.packages('tidyverse')
+library(tidyverse)
+mtcars %>% filter(cyl==6)
 ```
 
 ## Practice:
