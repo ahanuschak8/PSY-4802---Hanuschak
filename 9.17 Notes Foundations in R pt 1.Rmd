@@ -446,6 +446,12 @@ mtcars %>% filter(cyl==6)
 
 3.  create a subset of data with all cars that have at least 100
     horsepower and 4 gears.
+```{r}
+subset(mtcars,mtcars$mpg <25)
+subset(mtcars,mtcars$am==0)
+subset(mtcars, mtcars$hp >= 100 & gear==4)
+```
+
 
 **A Note on Pipes (more advanced)** If not, we're going to talk about
 another way to get a subset of data from our dataframe.
@@ -473,20 +479,30 @@ We can use filter and select to subset data with pipes.
 We can use `filter()` to pick a subset of rows:
 
 ```{r}
-
+fourthGear <- mtcars |> filter(gear==4)
 ```
 
 We can use `select()` to pick a subset of columns:
 
 ```{r}
-
+fourthGear2 <- mtcars |> filter(gear==4) |> select(mpg)
 ```
 
 #### Learning Outcome 4 Practice:
 
 1.  Load the ChickWeight dataset.
+```{r}
+data(ChickWeight)
+```
+
 
 2.  Create a subset of data that contains information for Chick 8
+```{r}
+chick8 <- subset(ChickWeight, ChickWeight$Chick ==8)
+diet2 <- ChickWeight |> filter(Diet ==2)
+lightChicks <- ChickWeight |> filter(weight<100)
+```
+
 
 3.  Create a subset of data for Diet 2 only.
 
@@ -504,8 +520,16 @@ of our data. they both use a similar format
 install ggplot if you haven't already!)
 
 ```{r}
+install.packages('ggplot2')
 
 ```
+```{r}
+head(ChickWeight)
+head(ChickWeight, 1)
+tail(ChickWeight)
+tail(ChickWeight, 1)
+```
+
 
 hypothetically, we have a dataset with 1000 rows. can we just get rows
 50-100? yes! dataset[50:100,]
@@ -517,7 +541,7 @@ appropriately/is what we expect.
 `summary()`.
 
 ```{r}
-
+summary(ChickWeight)
 ```
 
 What do you notice about the summaries?
@@ -536,36 +560,55 @@ If we need the \# of observations, we can use `length()` or `nrow()` to
 get this information.
 
 ```{r}
-
+length(ChickWeight$Diet)
+nrow(ChickWeight)
 ```
 
 We can also take the average by using the function `mean()`.
 
 ```{r}
-
+meanChick <- mean(ChickWeight$weight)
 ```
 
 We can get the standard deviation using `sd()`.
 
 ```{r}
-
+sdChick <- sd(ChickWeight$weight)
 ```
 
 `var()`gives us the variance
 
 ```{r}
-
+varChick <- var(ChickWeight$weight)
 ```
 
 `range()` gives us the range
 
 ```{r}
-
+rangeChick <- range(ChickWeight$weight)
 ```
 
 ###Learning Outcome 5 Practice
 
 1.  Summarize the ChickWeight dataset
+```{r}
+summary(ChickWeight)
+
+meanChick <- mean(ChickWeight$weight)
+
+summary(ChickWeight[ChickWeight$Chick==1,])
+summary(ChickWeight |> filter(Chick==1))
+
+var(ChickWeight$weight)
+
+ranges <- numeric(50)
+for(i in 1:50) {
+  chick <- ChickWeight$weight[ChickWeight$Chick == i]
+  ranges[i] <- max(chick) - min(chick)
+}
+ranges
+```
+
 
 2.  Find the mean of the weight column
 
