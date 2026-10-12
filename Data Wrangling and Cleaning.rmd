@@ -21,7 +21,9 @@ You'll want to press the "import dataset" button above your global environment. 
 Once you press okay, you'll see your dataset pop up in the console below. You should move it to your .Rmd file and name it however you'd like. I have a tendency to use "dat", though it's not the most informative. Feel free to use your own name, but remember that whatever you call it here is how you'll refer to it for the rest of the lesson. 
 
 ```{r}
-AggressionData <- read.csv('/Users/ahanuschak/Documents/R and Research - Rfiles/PSY 4802 - Hanuschak/PSY4802-AggressionSampleData.csv')
+AggressionData <- read.csv("PSY4802-AggressionSampleData.csv")
+
+#AggressionData <- readcsv('/Users/ahanuschak/Documents/R and Research - Rfiles/PSY 4802 - Hanuschak/PSY4802-AggressionSampleData.csv')
 ```
 getting/setting wd
 ```{r}
@@ -43,26 +45,26 @@ As mentioned above, the current data are in wide format. We can change this to l
 **pivot_longer**
 I think this is the easiest version to use. We'll need to use the "tidyverse" library. 
 ```{r}
-
+library(tidyverse)
 ```
 `pivot_longer()` uses the following structure: 
 `pivot_longer(dataframe, columns containing wide data, names_to, values_to)`
 names_to: specifies what you'd like to call the column that contains the previous column names
 values_to: specifies the name of the column where the scores go
 ```{r}
-
+AggressionDatLong <- pivot_longer(AggressionData, cols = c("baselineAggression","postAggression"), names_to = "timePoint", values_to = "aggressionScores")
 ```
 **Note:** remember to save the data to your environment. 
 
 #### Learning Outcome 1 Practice
 1. Open the relig_income dataset.
 ```{r}
-
+data(relig_income)
 ```
 
 2. Restructure the dataset so that it is in long format. 
 ```{r}
-
+relig_income_long <- relig_income |> pivot_longer(cols = colnames(relig_income)[2:11], names_to = "incomeBracket",values_to = "frequency")
 ```
 
 **gather** 
@@ -72,33 +74,34 @@ key- what you'd like the column containing old column names to be called
 value- what you'd like the scores column to be called
 
 ```{r}
-
+AggressionDataLong2<- gather(AggressionData, key = "Timepoint", value = "Aggressionscore", c("baselineAggression", "postAggression"))
 ```
 
 **melt**
 `melt()` is a function in the reshape2 library. It's another way to create long data
 ```{r}
-
+install.packages("reshape2")
+library(reshape2)
 ```
 `melt()` uses the following arguments: 
 `melt(dataframe, id.vars, measure.vars, variable.name, value.name)`
 ```{r}
-
+AggressionDataLong3 <- melt(AggressionData, id.vars = c('subjNo', 'ageGroup','parentReportGender','condition'), measure.vars = c('baselineAggression', 'postAggression'), variable.name = 'timePoint', value.name = 'aggressionScore')
 ```
 
 ###practice: 
 
 1. open the billboard dataset. 
 ```{r}
-
+billboard <- tidyr::billboard
 ```
 2. convert it from wide to long format. 
 ```{r}
-
+billboardLong <- gather(billboard, key = "week", value = "rank", c(""))
 ```
 #### pipes! 
 ```{r}
-
+billboardLong2 <- billboard |> pivot_longer(cols = c(colnames(billboard)[4:79]), names_to = 'weeks', values_to = 'position')
 ```
 
 
