@@ -60,6 +60,10 @@ for(i in 1:length(billboard$artist)){
   }
 }
 ```
+AW comment: this is a forloop that accmplishes the goal, but not a function 
+
+britneyFunction<- function(artist){
+artist=="Spears, Britney"}
 
 5. Test your function on the billboard data. Save the results to a new column called "wasItBritney"
 ```{r}
@@ -72,6 +76,7 @@ for(i in 1:length(billboard$artist)){
   }
 }
 ```
+britneyFunction(billboard$artist)
 
 6. Use a for loop to determine if a song placed 50 or below or placed above 50 during the first week. 
 ```{r}
