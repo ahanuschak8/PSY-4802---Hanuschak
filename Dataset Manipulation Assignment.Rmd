@@ -1,0 +1,81 @@
+---
+title: "Dataset Manipulation Assignment"
+author: "Amanda Mae Woodward"
+date: "2026-10-07"
+output: html_document
+---
+
+#Part 1
+1.Open the sleep dataset in R
+```{r}
+data(sleep)
+library(tidyverse)
+```
+
+2. Is it long or wide format? How do you know?
+  Long. Only 10 patients but 20 observations so each patient has multiple rows of data, making it long.
+3. Transform this data so that it is in the other format.
+```{r}
+sleep_wide <- pivot_wider(sleep, names_from = group, values_from = extra)
+```
+
+4. Transform your data back to its original format.
+```{r}
+sleep_long <- pivot_longer(sleep_wide, cols = c("1", "2"), names_to = "group", values_to = "extra")
+```
+
+5. Open the Starwars dataset
+```{r}
+data(starwars)
+```
+
+6. Create homeworld as a factor. How many levels does it have?
+```{r}
+starwars$homeworld2 <- as.factor(starwars$homeworld)
+levels(starwars$homeworld2)
+nlevels(starwars$homeworld2)
+#48 levels
+```
+
+7. Reorder homeworld so that Naboo is the reference group.
+```{r}
+starwars$homeworld2 <- relevel(starwars$homeworld2, ref = "Naboo")
+levels(starwars$homeworld2)
+```
+
+8. Use mutate to create a column transforming kg to pounds. (hint: you may need to look up the conversion)
+```{r}
+starwars<- starwars |> mutate(massLbs = mass*2.2)
+```
+
+9. Print a summary of your column from #8
+```{r}
+summary(starwars$massLbs)
+```
+
+
+#Part 2
+10. open the billboard dataset.
+```{r}
+data(billboard)
+```
+
+11. are the data in this dataframe in long or wide format? explain how you know.
+  Wide. Each song has only 1 row, the wide columns are the weeks with weekly rankings for each song
+12. change the data from its original format to the other version.
+```{r}
+billboardLong<- pivot_longer(billboard, cols = starts_with("wk"), names_to = "week", names_prefix = "wk", values_to = "rank")
+
+# i wanted to find a way to shorten the process of selecting each column without writing each individual column. i found https://tidyr.tidyverse.org/reference/pivot_longer.html for starts_with, which will use the columns that start with "wk" (which is every single weekly column) and also to remove the "wk" using names_prefix. names_prefix would then only select everything after "wk" to copy into the new columns, from the ? page:  regular expression used to remove matching text from the start of each variable name.
+```
+
+13. change it from your altered version in #3 back to its original state.
+```{r}
+billboardWide <- pivot_wider(billboardLong, names_from = "week", values_from = "rank", names_prefix = "wk")
+```
+
+14. Separate the date entered column into three columns: one for year, one for month, and one for day.
+```{r}
+dateSeparateBillboard <- separate(billboard, date.entered, into = c("Year", "Month", "Date"), sep = "-")
+```
+
