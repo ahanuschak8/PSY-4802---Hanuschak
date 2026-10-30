@@ -61,3 +61,4 @@ nrow(starwarsNaboo)
 ```{r}
 nrow(subset(starwars, starwars$species == "Droid"))
 ```
+how many droids?
