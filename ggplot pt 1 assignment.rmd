@@ -1,0 +1,66 @@
+---
+title: "ggplot pt 1 assignment"
+author: "Amanda Mae Woodward"
+date: "2026-10-29"
+output: html_document
+---
+1. open the starwars dataset in tidyverse
+```{r}
+library(tidyverse)
+library(ggplot2)
+data(starwars)
+library(jtools)
+```
+
+
+2. create a graph showing the frequency of eye colors in the dataset. 
+```{r}
+ggplot(starwars, aes(eye_color))+ geom_bar()
+```
+
+
+3. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc. 
+```{r}
+library(viridis)
+starwars$eye_color<- relevel(as.factor(starwars$eye_color), ref = "unknown")
+ggplot(starwars, aes(eye_color, fill = eye_color))+ geom_bar(color = "aquamarine", width = 0.8) + scale_fill_viridis(option = "mako", discrete = TRUE) + theme_dark() + labs(x = "Character Eye Color", y = "Count", title = "Character Eye Color Frequency") + theme(legend.position = "none")
+```
+
+
+4. Create a graph displaying information about character's height in each homeworld. 
+```{r}
+ggplot(starwars, aes(height, homeworld)) + geom_boxplot()
+```
+
+
+5. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+ggplot(starwars, aes(homeworld, height/100, fill = homeworld)) + geom_boxplot() + labs(title = "Character Height by Homeworld", y = "height (meters)")+ theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
+
+# https://www.r-bloggers.com/2024/03/rotate-ggplot2-axis-labels-in-r-improve-plot-readability/
+```
+
+
+6. Create a graph of character's height by mass. 
+```{r}
+ggplot(starwars, aes(height, mass))+geom_point()
+```
+
+
+7.Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+ggplot(starwars, aes(height/100, mass, color = height))+geom_point(shape = 3) + scale_color_viridis(option = "plasma")+ theme_bw() + labs(title = "Character Height vs Mass", x = "Height (meters)", y = "Weight (kg)") + theme(legend.position = "none")
+```
+
+
+8. Add gender as a third variable to your graph of height by mass. 
+```{r}
+ggplot(starwars, aes(height/100, mass, color = gender))+geom_point()
+```
+
+
+9. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+ggplot(starwars, aes(height/100, mass, color = gender))+geom_point() + theme_bw() + labs(title = "Character Height vs Mass Defined by Gender", x = "Height (meters)", y = "Weight (kg)")
+```
+
