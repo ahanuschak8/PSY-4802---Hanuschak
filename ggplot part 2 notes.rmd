@@ -41,32 +41,35 @@ ggplot(diamonds, aes(color, price, fill=color)) + geom_boxplot() + scale_fill_ma
 
 ### Practice:
 ```{r}
-
+data(mtcars)
+ggplot(mtcars, aes(mpg, hp, color = as.factor(gear)))+ geom_point()
 ```
 
 1) make a graph of bill length and bill depth. Include island as a third variable
 ```{r}
-
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = island))+geom_point()
 ```
 
 2) Move the legend to the top of the graph
 ```{r}
-
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = island))+geom_point()+theme(legend.position = "top")
 ```
 
 3) Remove the legend from the graph 
 ```{r}
-
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = island))+geom_point()+theme(legend.position = "none")
 ```
 
 4) Change the title of the legend
 ```{r}
-
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = island))+geom_point()+scale_color_manual(values = c("red", "green", "blue"), name = "Island of Residence")
 ```
 
 5) make a graph of bill length and bill depth. Include flipper length as a third variable
 ```{r}
-
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = flipper_length_mm))+geom_point()
 ```
 
 ### Learning Outcome 2: Describe how to use facet wrap
@@ -74,30 +77,33 @@ Facet Wrap allows us to incorporate a third variable in another way. Specificall
 
 we need to make a graph and save it 
 ```{r}
-ggplot(diamonds, aes(color, price, color= cut))+ geom_point()
+ggplot(diamonds, aes(color, price, color= cut))+ geom_boxplot()+ facet_wrap(~cut)
 
 
 ```
 
 ```{r}
-
+colorPriceGraph <- ggplot(diamonds, aes(color, price, color= cut))+ geom_boxplot()
+colorPriceGraph + facet_wrap(~cut)
 ```
 
 ### change labels on the axes
 change levels beforehand
 ```{r}
-
+levels(diamonds$cut)<- c("Fair Cut", "Good Cut", "Very Good Cut", "Premium Cut", "Ideal Cut")
+ggplot(diamonds, aes(color, price, color= cut))+ geom_boxplot() + facet_wrap(~cut)
 ```
 
 make a vector called labels. use `labeller=as_labeller())` in `facet_wrap()`
 ```{r}
-
+labels<- c("Fair Cut" = "fair", "Good Cut"="good","Very Good Cut"="very good","Premium Cut"="premium","Ideal Cut"="ideal")
+ggplot(diamonds, aes(color, price, color= cut))+ geom_boxplot() + facet_wrap(~cut, labeller = as_labeller(labels))
 ```
 
 ### Practice: 
 1) create a facet wrap graph to generate a scatterplot of mpg and hp based on the number of cylinders a car has
 ```{r}
-
+ggplot(mtcars, aes(mpg, hp, color = as.factor(gear)))+ geom_point()+ facet_wrap(~gear)
 ```
 
 ### Learning Outcome 3: Explain how to export graphs
@@ -106,13 +112,16 @@ Specifically, you can use the following arguments:
 `ggsave("name of graph", width, height, units, dpi)`
 I don't usually specify a path in ggsave, but make sure my r code is in the directory I'd like it to be saved in. you can check your working directory by using this code
 ```{r}
-
+library(viridis)
+library(jtools)
+ggplotExample <- ggplot(penguins, aes(species, flipper_length_mm, fill = island)) + geom_boxplot()+ scale_fill_viridis(option = "mako", discrete = TRUE, name = "Island Name")
+ggplotExample + theme_apa()+ ggtitle(label = "Penguin Flipper Length Across Species and Islands") + xlab("Species Name") + ylab("Flipper Length (mm)") + theme(text = element_text(family = "Times New Roman", size = 18))
 ```
 make a graph to save
 ```{r}
- 
+ggsave("PenguinFlipperLength.tiff", width = 10, height = 10, units = "in", dpi = 300)
 ```
 you can change your working directory using this code: 
 ```{r}
-
+# use dev.off() if having trouble with saving and rerun the code for the graph
 ```

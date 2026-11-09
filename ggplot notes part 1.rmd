@@ -161,7 +161,7 @@ ggplot(diamonds, aes(clarity))+geom_bar()
 **Changing the x and y label axes** 
 You'll notice that our y axis is "count" and our x axis is "clarity"s. These are not particularly informative. We can change these using xlab and ylab. 
 ```{r}
-ggplot(diamonds, aes(clarity))+geom_bar(fill = "#66CCFF")+theme_apa()+ xlab("Diamond Clarity")+ylab("Frequency")+ggtitle("Diamonds\nData from the diamonds dataset")
+ggplot(diamonds, aes(clarity))+geom_bar(fill = "#66CCFF")+theme_classic()+ xlab("Diamond Clarity")+ylab("Frequency")+ggtitle("Diamonds\nData from the diamonds dataset")
 
 #\n to add space, before or after
 ```
