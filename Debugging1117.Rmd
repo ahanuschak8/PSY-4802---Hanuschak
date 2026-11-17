@@ -1,0 +1,43 @@
+---
+title: "11/17Debugging"
+author: "Arsen D. Hanuschak"
+date: "2026-11-17"
+output: html_document
+---
+
+```{r}
+library(readr)
+spotifyDat <- read_csv("spotifyDat Fall26.csv")
+
+library(tidyverse)
+library(viridis)
+data(mtcars)
+library(palmerpenguins)
+data(penguins)
+```
+Code to be Fixed
+```{r}
+ggplot(spotifyDat, aes(popularity, tempo, fill = danceability)) + geom_point() + scale_fill_viridis()
+```
+
+```{r}
+penguinsLong <- penguins |> pivot_longer(cols = c("measurements"), names_from = "bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g", values_to = "value")
+```
+
+```{r}
+penguins<- penguins |> mutate(penguins$massLbs = body_mass_g/453.6)
+```
+
+Solutions
+```{r}
+ggplot(spotifyDat, aes(popularity, tempo, color = danceability)) + geom_point() + scale_color_viridis()
+```
+
+```{r}
+penguinsLong <- penguins |> pivot_longer(cols = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), names_to = "measurements", values_to = "value")
+```
+
+```{r}
+penguins<- penguins |> mutate(massLbs = body_mass_g/453.6)
+```
+
